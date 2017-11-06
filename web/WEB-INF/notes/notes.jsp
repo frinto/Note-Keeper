@@ -25,6 +25,7 @@
                 <th>Title</th>
                 <th>Date Created</th>
                 <th></th>
+                <th></th>
             </tr>
             <c:forEach var="item" items="${notes}">
                 <tr>
@@ -38,9 +39,27 @@
                             <input type="hidden" name="selectedNote" value="${item.noteID}">
                         </form>
                     </td>
+                    <td>
+                        <form action="notes" method="get">
+                            <input type="submit" value="Edit">
+                            <input type="hidden" name="action" value="view">
+                            <input type="hidden" name="selectedNoteId" value="${item.noteID}">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
+        
+        <c:if test="${selectedNote != null}">
+            <h3>Edit Note</h3>
+            <form action="notes" method="POST">
+                Note ID: <input type="text" name="noteID" value="${selectedNote.noteID}" readonly><br>
+                Title: <input type="text" name="title" value="${selectedNote.title}"><br>
+                Contents: <input type="text" name="contents" value="${selectedNote.contents}"><br>
+                <input type="hidden" name="action" value="edit">
+                <input type="submit" value="Save">
+            </form>
+        </c:if>
 
         <h1>Add Notes</h1>
         <form action="notes" method="POST">

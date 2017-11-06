@@ -88,4 +88,23 @@ public class NoteDB
         }
     }
 
+    public static int update(Note note) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+
+        try {
+            trans.begin();
+            em.merge(note);
+            trans.commit();
+            return 1;
+        } catch (Exception ex) {
+            trans.rollback();
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot update " + note.toString(), ex);
+            throw new DBException("Error updating note");
+        } finally {
+            em.close();
+        }
+    }
+
 }

@@ -83,6 +83,16 @@ public class Note implements Serializable
     {
         this.noteID = noteID;
     }
+    
+    public Note(Integer noteID, String title, String contents, User owner)
+    {
+        this.noteID = noteID;
+        this.title = title;
+        this.dateCreated = new Date();
+        this.contents = contents;
+        this.owner = owner;
+        
+    }
 
     public Note(Integer noteID, Date dateCreated, String title, String contents)
     {

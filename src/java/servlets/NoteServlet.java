@@ -39,6 +39,17 @@ public class NoteServlet extends HttpServlet
         User user = (User) session.getAttribute("userSession");
         
         NoteService ns = new NoteService();
+        
+        String action = request.getParameter("action");
+        if (action != null && action.equals("view")) {
+            String selectedNoteId = request.getParameter("selectedNoteId");
+            try {
+                Note note = ns.get(Integer.parseInt(selectedNoteId));
+                request.setAttribute("selectedNote", note);
+            } catch (Exception ex) {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         List<Note> notes = null;
 
@@ -58,6 +69,7 @@ public class NoteServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        String noteID = request.getParameter("noteID");
         String action = request.getParameter("action");
         String title = request.getParameter("title");
         String contents = request.getParameter("contents");
@@ -86,6 +98,10 @@ public class NoteServlet extends HttpServlet
             {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else if(action.equals("edit"))
+        {
+            Note note = new Note(Integer.parseInt(noteID),title, contents, user);
+            ns.update(note.getNoteID(),note.getTitle() ,note.getContents(), user);
         }
         
         List<Note> notes = null;
