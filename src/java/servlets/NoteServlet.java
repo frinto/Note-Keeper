@@ -7,6 +7,7 @@ package servlets;
 
 import businesslogic.NoteService;
 import domainmodel.Note;
+import domainmodel.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -35,7 +36,7 @@ public class NoteServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("userSession");
+        User user = (User) session.getAttribute("userSession");
         
         NoteService ns = new NoteService();
 
@@ -57,6 +58,48 @@ public class NoteServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        String action = request.getParameter("action");
+        String title = request.getParameter("title");
+        String contents = request.getParameter("contents");
+        
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userSession");
+        
+        NoteService ns = new NoteService();
+        
+        if(action.equals("delete"))
+        {
+            int selectedNoteID = Integer.parseInt(request.getParameter("selectedNote"));
+            try
+            {
+                ns.delete(selectedNoteID);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else if(action.equals("add"))
+        {
+            try
+            {
+                ns.insert(title, contents, user);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        List<Note> notes = null;
+
+        try
+        {
+            notes = ns.getAll();
+        } catch (Exception ex)
+        {
+            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("notes", notes);
+        getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
 
     }
 

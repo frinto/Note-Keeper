@@ -65,7 +65,9 @@ public class AccountServlet extends HttpServlet
                     {
                         HttpSession session = request.getSession();
                         
-                        session.setAttribute("userSession", u.getUsername());
+                        User user = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname());
+                        
+                        session.setAttribute("userSession", user);
                         
                         response.sendRedirect("notes");
                         
