@@ -16,6 +16,8 @@
     <body>
         <h1>User</h1>
 
+        Hello, ${loggedInUser} <a href="notes?action=logout">Logout</a>
+        
 
         <h1>Notes</h1>
 

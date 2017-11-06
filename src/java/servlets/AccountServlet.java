@@ -28,6 +28,15 @@ public class AccountServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userSession");
+        
+        if(user != null)
+        {
+           response.sendRedirect("notes");
+           return;
+        }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -68,6 +77,7 @@ public class AccountServlet extends HttpServlet
                         User user = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname());
                         
                         session.setAttribute("userSession", user);
+                        session.setAttribute("loggedInUser", u.getUsername());
                         
                         response.sendRedirect("notes");
                         

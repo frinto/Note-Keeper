@@ -49,8 +49,8 @@ public class NoteServlet extends HttpServlet
             } catch (Exception ex) {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-
+        }  
+        
         List<Note> notes = null;
 
         try
@@ -61,8 +61,30 @@ public class NoteServlet extends HttpServlet
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        
         request.setAttribute("notes", notes);
-        getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
+        
+        if(action != null && action.equals("logout"))
+        {
+            session.invalidate();
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }else if(action != null && action.equals("view"))
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
+            return;
+        }
+        else if(action == null && user != null)
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
+            return;
+        }
+        else
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }
+        
     }
 
     @Override
