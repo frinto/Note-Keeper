@@ -23,9 +23,9 @@ public class NoteService
         return NoteDB.getNote(noteId);
     }
     
-    public List<Note> getAll() throws Exception
+    public List<Note> getAll(User user) throws Exception
     {
-        return NoteDB.getAll();
+        return NoteDB.getAll(user);
     }
     
     public int delete(int noteID) throws Exception

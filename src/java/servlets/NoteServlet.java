@@ -55,7 +55,7 @@ public class NoteServlet extends HttpServlet
 
         try
         {
-            notes = ns.getAll();
+            notes = ns.getAll(user);
         } catch (Exception ex)
         {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,7 +130,7 @@ public class NoteServlet extends HttpServlet
 
         try
         {
-            notes = ns.getAll();
+            notes = ns.getAll(user);
         } catch (Exception ex)
         {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);

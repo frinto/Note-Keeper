@@ -6,11 +6,13 @@
 package dataaccess;
 
 import domainmodel.Note;
+import domainmodel.User;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -19,13 +21,22 @@ import javax.persistence.EntityTransaction;
 public class NoteDB
 {
 
-    public static List<Note> getAll() throws DBException
+    public static List<Note> getAll(User owner) throws DBException
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        
+        String qString = "select n from Note n where n.owner in (:owner)";
+
+        TypedQuery<Note> q = em.createQuery(qString, Note.class);
+        q.setParameter("owner", owner);
+        
+        List<Note> notes = q.getResultList();
+        
 
         try
         {
-            List<Note> notes = em.createNamedQuery("Note.findAll", Note.class).getResultList();
+            //List<Note> notes = em.createNamedQuery("Note.findAll", Note.class).getResultList();
             return notes;
         } catch (Exception ex)
         {
