@@ -5,8 +5,13 @@
  */
 package servlets;
 
+import businesslogic.UserService;
+import domainmodel.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +33,21 @@ public class AdminServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        
+        UserService us = new UserService();
+        
+        List<User> users = null;
+
+        try
+        {
+            users = us.getAll();
+        } catch (Exception ex)
+        {
+            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        request.setAttribute("users", users);
         getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request,response);
     }
 
@@ -35,6 +55,21 @@ public class AdminServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        UserService us = new UserService();
+        
+        List<User> users = null;
+
+        try
+        {
+            users = us.getAll();
+        } catch (Exception ex)
+        {
+            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        request.setAttribute("users", users);
+        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request,response);
 
     }
 

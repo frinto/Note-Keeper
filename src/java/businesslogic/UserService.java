@@ -5,11 +5,20 @@
  */
 package businesslogic;
 
+import dataaccess.UserDB;
+import domainmodel.User;
+import java.util.List;
+
 /**
  *
  * @author Administrator
  */
 public class UserService
 {
+
+    public List<User> getAll() throws Exception
+    {
+        return UserDB.getAll();
+    }
     
 }

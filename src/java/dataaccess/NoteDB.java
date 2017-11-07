@@ -40,7 +40,7 @@ public class NoteDB
             return notes;
         } catch (Exception ex)
         {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot read users", ex);
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot read notes", ex);
             throw new DBException("Error getting Notes");
         } finally
         {
@@ -55,7 +55,7 @@ public class NoteDB
             Note note = em.find(Note.class, noteID);
             return note;
         } catch (Exception ex) {
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot read notes", ex);
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot read notes", ex);
             throw new DBException("Error getting Notes");
         } finally {
             em.close();
@@ -73,7 +73,7 @@ public class NoteDB
             return 1;
         } catch (Exception ex) {
             trans.rollback();
-            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot delete " + note.toString(), ex);
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot delete " + note.toString(), ex);
             throw new DBException("Error deleting note");
         } finally {
             em.close();

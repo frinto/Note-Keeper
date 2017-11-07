@@ -5,11 +5,35 @@
  */
 package dataaccess;
 
+import domainmodel.User;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+
 /**
  *
  * @author Administrator
  */
 public class UserDB
 {
+
+    public static List<User> getAll() throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+
+        try
+        {
+            List<User> users = em.createNamedQuery("User.findAll", User.class).getResultList();
+            return users;
+        } catch (Exception ex)
+        {
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot read users", ex);
+            throw new DBException("Error getting user");
+        } finally
+        {
+            em.close();
+        }
+    }
     
 }
