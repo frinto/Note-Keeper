@@ -54,5 +54,21 @@
                 </tr>  
             </c:forEach>
         </table>
+
+        <h1>Add Users</h1>
+        <form action="admin" method="POST">
+            Username: <input type="text" name="username" value=""><br>
+            Password: <input type="password" name="password" value=""><br>
+            Email:	  <input type="text" name="email" value=""><br>
+            Active:	  <input type="number" name="active" min="0" max="1" value=""><br>
+            Firstname:<input type="text" name="firstname" value=""><br>
+            LastName: <input type="text" name="lastname" value=""><br>
+            Role: 	  <input type="number" name="role" min="0" max="1" value=""><br>
+            <input type="hidden" name="action" value="add">
+            <input type="submit" value="Add User">
+        </form>
+
+        ${errorMessage}
+
     </body>
 </html>

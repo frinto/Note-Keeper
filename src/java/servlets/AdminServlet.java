@@ -33,9 +33,9 @@ public class AdminServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        
+
         UserService us = new UserService();
-        
+
         List<User> users = null;
 
         try
@@ -45,18 +45,62 @@ public class AdminServlet extends HttpServlet
         {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         request.setAttribute("users", users);
-        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        boolean activeBoolean = false;
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String active = request.getParameter("active");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String role = request.getParameter("role");
+        int roleInt;
+        int activeInt;
+
+        String action = request.getParameter("action");
+
         UserService us = new UserService();
-        
+
+        if (action.equals("add"))
+        {
+            if (username.equals("") || password.equals("") || email.equals("") || firstname.equals("") || lastname.equals("") || active.equals("") || active.equals("") || role.equals(""))
+            {
+                request.setAttribute("errorMessage", "please fill in all fields");
+
+            } else
+            {
+                roleInt = Integer.parseInt(role);
+                activeInt = Integer.parseInt(active);
+
+                if (activeInt == 1)
+                {
+                    activeBoolean = true;
+                } else if (activeInt == 0)
+                {
+                    activeBoolean = false;
+                }
+                
+                try
+                {
+                    us.insert(username, password, email, activeBoolean, firstname, lastname, roleInt);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+
         List<User> users = null;
 
         try
@@ -66,10 +110,9 @@ public class AdminServlet extends HttpServlet
         {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         request.setAttribute("users", users);
-        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
 
     }
 
