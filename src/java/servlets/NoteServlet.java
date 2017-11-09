@@ -37,54 +37,76 @@ public class NoteServlet extends HttpServlet
     {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("userSession");
-        
+
+        User admin = (User) session.getAttribute("adminSession");
+
         NoteService ns = new NoteService();
-        
+
         String action = request.getParameter("action");
-        if (action != null && action.equals("view")) {
+        if (action != null && action.equals("view"))
+        {
             String selectedNoteId = request.getParameter("selectedNoteId");
-            try {
+            try
+            {
                 Note note = ns.get(Integer.parseInt(selectedNoteId));
                 request.setAttribute("selectedNote", note);
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }  
-        
+        }
+
         List<Note> notes = null;
 
-        try
+        if (user != null)
         {
-            notes = ns.getAll(user);
-        } catch (Exception ex)
+            try
+            {
+                notes = ns.getAll(user);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (admin != null)
         {
-            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                notes = ns.getAll(admin);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
-        
+
         request.setAttribute("notes", notes);
-        
-        if(action != null && action.equals("logout"))
+
+        if (action != null && action.equals("logout"))
         {
             session.invalidate();
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
-        }else if(action != null && action.equals("view"))
+        } else if (action != null && action.equals("view"))
         {
             getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
             return;
-        }
-        else if(action == null && user != null)
+        } else if (action == null && user != null)
         {
             getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
             return;
-        }
-        else
+        } else if (action != null && admin != null)
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
+            return;
+        } else if (action == null && admin != null)
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
+            return;
+        } else
         {
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
-        
+
     }
 
     @Override
@@ -96,46 +118,85 @@ public class NoteServlet extends HttpServlet
         String title = request.getParameter("title");
         String contents = request.getParameter("contents");
         
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("userSession");
-        
-        NoteService ns = new NoteService();
-        
-        if(action.equals("delete"))
-        {
-            int selectedNoteID = Integer.parseInt(request.getParameter("selectedNote"));
-            try
-            {
-                ns.delete(selectedNoteID);
-            } catch (Exception ex)
-            {
-                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else if(action.equals("add"))
-        {
-            try
-            {
-                ns.insert(title, contents, user);
-            } catch (Exception ex)
-            {
-                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else if(action.equals("edit"))
-        {
-            Note note = new Note(Integer.parseInt(noteID),title, contents, user);
-            ns.update(note.getNoteID(),note.getTitle() ,note.getContents(), user);
-        }
-        
         List<Note> notes = null;
 
-        try
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("userSession");
+
+        User admin = (User) session.getAttribute("adminSession");
+
+        NoteService ns = new NoteService();
+
+        if (user != null)
         {
-            notes = ns.getAll(user);
-        } catch (Exception ex)
+            if (action.equals("delete"))
+            {
+                int selectedNoteID = Integer.parseInt(request.getParameter("selectedNote"));
+                try
+                {
+                    ns.delete(selectedNoteID);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (action.equals("add"))
+            {
+                try
+                {
+                    ns.insert(title, contents, user);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (action.equals("edit"))
+            {
+                Note note = new Note(Integer.parseInt(noteID), title, contents, user);
+                ns.update(note.getNoteID(), note.getTitle(), note.getContents(), user);
+            }
+            
+            try
+            {
+                notes = ns.getAll(user);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else  if (admin != null)
         {
-            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            if (action.equals("delete"))
+            {
+                int selectedNoteID = Integer.parseInt(request.getParameter("selectedNote"));
+                try
+                {
+                    ns.delete(selectedNoteID);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (action.equals("add"))
+            {
+                try
+                {
+                    ns.insert(title, contents, admin);
+                } catch (Exception ex)
+                {
+                    Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (action.equals("edit"))
+            {
+                Note note = new Note(Integer.parseInt(noteID), title, contents, admin);
+                ns.update(note.getNoteID(), note.getTitle(), note.getContents(), admin);
+            }
+            
+            try
+            {
+                notes = ns.getAll(admin);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+
         request.setAttribute("notes", notes);
         getServletContext().getRequestDispatcher("/WEB-INF/notes/notes.jsp").forward(request, response);
 
