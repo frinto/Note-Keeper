@@ -159,8 +159,25 @@ public class AdminServlet extends HttpServlet
         } else if (action.equals("delete"))
         {
             String selectedUsername = request.getParameter("selectedUser");
-
-            us.delete(selectedUsername);
+            
+            try
+            {
+                User user = us.get(selectedUsername);
+                Role userRole = user.getRole();
+                
+                if(userRole.getRoleID() == 1)
+                {
+                    request.setAttribute("errorDelete", "ERROR Admins cannot be deleted!");
+                }
+                else
+                {
+                    us.delete(selectedUsername);
+                }
+            } catch (Exception ex)
+            {
+                Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } else if (action.equals("edit"))
         {
             roleInt = Integer.parseInt(role);

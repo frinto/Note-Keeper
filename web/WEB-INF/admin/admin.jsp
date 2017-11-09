@@ -15,10 +15,10 @@
     </head>
     <body>
         <h1>Admin</h1>
-		
-		hello ${loggedInAdmin}, <a href="admin?action=logout">Logout</a>
 
-		<h1>User List</h1>
+        hello ${loggedInAdmin}, <a href="admin?action=logout">Logout</a>
+
+        <h1>User List</h1>
 
         <table>
             <tr>
@@ -57,7 +57,9 @@
                     </td>
                 </tr>  
             </c:forEach>
-        </table>
+        </table><br>
+        
+        ${errorDelete}
 
         <c:if test="${selectedUser != null}">
             <h3>Edit User</h3>
@@ -85,7 +87,7 @@
             Role: 	  <input type="number" name="role" min="1" max="2" value=""><br>
             <input type="hidden" name="action" value="add">
             <input type="submit" value="Add User">
-        </form>
+        </form><br>
 
         ${errorMessage}
 
