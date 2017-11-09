@@ -55,6 +55,38 @@ public class UserDB
             em.close();
         }
     }
+    
+    public static User getUser(String username) throws DBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try {
+            User user = em.find(User.class, username);
+            return user;
+        } catch (Exception ex) {
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot read users", ex);
+            throw new DBException("Error getting Users");
+        } finally {
+            em.close();
+        }
+    }
+    
+    public static int delete(User user) throws DBException {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try {
+            trans.begin();
+            em.remove(em.merge(user));
+            trans.commit();
+            return 1;
+        } catch (Exception ex) {
+            trans.rollback();
+            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot delete " + user.toString(), ex);
+            throw new DBException("Error deleting user");
+        } finally {
+            em.close();
+        }
+    }
 
    
 }

@@ -88,7 +88,7 @@ public class AdminServlet extends HttpServlet
                 {
                     activeBoolean = false;
                 }
-                
+
                 try
                 {
                     us.insert(username, password, email, activeBoolean, firstname, lastname, roleInt);
@@ -98,6 +98,12 @@ public class AdminServlet extends HttpServlet
                 }
 
             }
+
+        } else if (action.equals("delete"))
+        {
+            String selectedUsername = request.getParameter("selectedUser");
+
+            us.delete(selectedUsername);
 
         }
 

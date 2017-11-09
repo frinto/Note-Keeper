@@ -5,10 +5,14 @@
  */
 package businesslogic;
 
+import dataaccess.DBException;
+import dataaccess.NoteDB;
 import dataaccess.UserDB;
 import domainmodel.Role;
 import domainmodel.User;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,6 +32,19 @@ public class UserService
         
         User user = new User(username, password, email, activeBoolean, firstname, lastname, role);
         return UserDB.insert(user);
+    }
+
+    public int delete(String selectedUsername)
+    {
+        try
+        {
+            User deletedUser = UserDB.getUser(selectedUsername);
+            return UserDB.delete(deletedUser);
+        } catch (DBException ex)
+        {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
     
 }
