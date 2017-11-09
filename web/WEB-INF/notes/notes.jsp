@@ -14,10 +14,18 @@
         <title>User Page</title>
     </head>
     <body>
-        <h1>User</h1>
-
-        Hello, ${loggedInUser} <a href="notes?action=logout">Logout</a>
+        <c:if test="${userSession != null}">
+        <h1>User Notes</h1>
+        Hello, ${loggedInUser}<br>
+        <a href="notes?action=logout">Logout</a>
+        </c:if>
         
+        <c:if test="${adminSession != null}">
+        <h1>Admin Notes</h1>
+        Hello, ${loggedInAdmin}<br>
+        <a href="notes?action=logout">Logout</a>
+        <a href="admin">Admin Page</a>
+        </c:if>
 
         <h1>Notes</h1>
 
