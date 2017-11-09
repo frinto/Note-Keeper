@@ -15,16 +15,19 @@
     </head>
     <body>
         <c:if test="${userSession != null}">
-        <h1>User Notes</h1>
-        Hello, ${loggedInUser}<br>
-        <a href="notes?action=logout">Logout</a>
+            <h1>User Notes</h1>
+            Hello, ${loggedInUser}<br>
+            <a href="notes?action=logout">Logout</a>
+            <a href="notes">Notes Page</a>
+            <a href="view?action=account">View Account</a>
         </c:if>
-        
+
         <c:if test="${adminSession != null}">
-        <h1>Admin Notes</h1>
-        Hello, ${loggedInAdmin}<br>
-        <a href="notes?action=logout">Logout</a>
-        <a href="admin">Admin Page</a>
+            <h1>Admin Notes</h1>
+            Hello, ${loggedInAdmin}<br>
+            <a href="admin?action=logout">Logout</a>
+            <a href="admin">Admin Page</a>
+            <a href="notes?action=${loggedInAdmin}">Notes Page</a>
         </c:if>
 
         <h1>Notes</h1>
@@ -59,7 +62,7 @@
                 </tr>
             </c:forEach>
         </table>
-        
+
         <c:if test="${selectedNote != null}">
             <h3>Edit Note</h3>
             <form action="notes" method="POST">

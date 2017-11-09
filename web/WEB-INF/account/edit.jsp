@@ -11,9 +11,32 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Edit Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Edit</h1>
+
+        <c:if test="${userSession != null}">
+            <a href="notes?action=logout">Logout</a>
+                        <a href="notes">Notes Page</a>
+            <a href="view?action=account">View Account</a><br><br>
+        </c:if>
+
+        <c:if test="${selectedUser != null}">
+            <form action="edit" method="POST">
+                Username: <input type="text" name="username" value="${selectedUser.username}" readonly><br>
+                Password: <input type="password" name="password" value="${selectedUser.password}"><br>
+                Email:	  <input type="text" name="email" value="${selectedUser.email}"><br>
+                Active:	  <input type="number" name="active" min="0" max="1" value="${selectedUserActive}"><br>
+                First name:<input type="text" name="firstname" value="${selectedUser.firstname}"><br>
+                Last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
+                Role: 	  <input type="number" name="role" min="2" max="2" value="${selectedUserRole}"readonly><br>
+                <input type="hidden" name="action" value="editAccount">
+                <input type="submit" value="Save">
+            </form>
+        </c:if>
+            
+        ${editSuccess}
+
     </body>
 </html>
