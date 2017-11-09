@@ -16,7 +16,9 @@
     <body>
         <h1>Admin</h1>
 
-        hello ${loggedInAdmin}, <a href="admin?action=logout">Logout</a>
+        hello ${loggedInAdmin}, <a href="admin?action=logout">Logout</a><br>
+        
+        GOTO Notes -> <a href="notes?action=${loggedInAdmin}">Notes</a>
 
         <h1>User List</h1>
 

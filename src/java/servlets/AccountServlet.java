@@ -31,7 +31,7 @@ public class AccountServlet extends HttpServlet
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("userSession");
         
-        String admin = (String) session.getAttribute("adminSession");
+        User admin = (User) session.getAttribute("adminSession");
         
         if(user != null)
         {
@@ -72,7 +72,9 @@ public class AccountServlet extends HttpServlet
                     {
                         HttpSession session = request.getSession();
                         
-                        session.setAttribute("adminSession", u.getUsername());
+                        User admin = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname());
+                        
+                        session.setAttribute("adminSession", admin);
                         session.setAttribute("loggedInAdmin", u.getUsername());
                         
                         response.sendRedirect("admin");

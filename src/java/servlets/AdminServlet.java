@@ -37,7 +37,7 @@ public class AdminServlet extends HttpServlet
     {
         
         HttpSession session = request.getSession();
-        String admin = (String) session.getAttribute("adminSession");
+        User admin = (User) session.getAttribute("adminSession");
 
         UserService us = new UserService();
 
