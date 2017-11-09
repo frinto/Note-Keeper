@@ -49,7 +49,7 @@ public class UserDB
             return 1;
         } catch (Exception ex) {
             trans.rollback();
-            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot insert " + user.toString(), ex);
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot insert " + user.toString(), ex);
             throw new DBException("Error inserting user");
         } finally {
             em.close();
@@ -63,7 +63,7 @@ public class UserDB
             User user = em.find(User.class, username);
             return user;
         } catch (Exception ex) {
-            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot read users", ex);
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot read users", ex);
             throw new DBException("Error getting Users");
         } finally {
             em.close();
@@ -81,7 +81,7 @@ public class UserDB
             return 1;
         } catch (Exception ex) {
             trans.rollback();
-            Logger.getLogger(NoteDB.class.getName()).log(Level.SEVERE, "Cannot delete " + user.toString(), ex);
+            Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, "Cannot delete " + user.toString(), ex);
             throw new DBException("Error deleting user");
         } finally {
             em.close();

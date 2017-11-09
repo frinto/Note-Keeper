@@ -31,9 +31,16 @@ public class AccountServlet extends HttpServlet
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("userSession");
         
+        String admin = (String) session.getAttribute("adminSession");
+        
         if(user != null)
         {
            response.sendRedirect("notes");
+           return;
+        }
+        if(admin != null)
+        {
+           response.sendRedirect("admin");
            return;
         }
         

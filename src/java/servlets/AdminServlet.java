@@ -35,6 +35,9 @@ public class AdminServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        
+        HttpSession session = request.getSession();
+        String admin = (String) session.getAttribute("adminSession");
 
         UserService us = new UserService();
 
@@ -81,7 +84,27 @@ public class AdminServlet extends HttpServlet
         }
 
         request.setAttribute("users", users);
-        getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
+        
+        if(action != null && action.equals("logout"))
+        {
+            session.invalidate();
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }else if(action != null && action.equals("view"))
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
+            return;
+        }
+        else if(action == null && admin != null)
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
+            return;
+        }
+        else
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return;
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@
     <body>
         <h1>Admin</h1>
 		
-		hello ${loggedInAdmin}, <a href="login?action=logout">Logout</a>
+		hello ${loggedInAdmin}, <a href="admin?action=logout">Logout</a>
 
 		<h1>User List</h1>
 
@@ -62,7 +62,7 @@
         <c:if test="${selectedUser != null}">
             <h3>Edit User</h3>
             <form action="admin" method="POST">
-                Username: <input type="text" name="username" value="${selectedUser.username}"><br>
+                Username: <input type="text" name="username" value="${selectedUser.username}" readonly><br>
                 Password: <input type="password" name="password" value="${selectedUser.password}"><br>
                 Email:	  <input type="text" name="email" value="${selectedUser.email}"><br>
                 Active:	  <input type="number" name="active" min="0" max="1" value="${selectedUserActive}"><br>
