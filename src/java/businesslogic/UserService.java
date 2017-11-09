@@ -20,6 +20,9 @@ import java.util.logging.Logger;
  */
 public class UserService
 {
+    public User get(String username) throws Exception {
+        return UserDB.getUser(username);
+    }
 
     public List<User> getAll() throws Exception
     {
@@ -40,6 +43,18 @@ public class UserService
         {
             User deletedUser = UserDB.getUser(selectedUsername);
             return UserDB.delete(deletedUser);
+        } catch (DBException ex)
+        {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int update(User user)
+    {
+        try
+        {
+            return UserDB.update(user);
         } catch (DBException ex)
         {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);

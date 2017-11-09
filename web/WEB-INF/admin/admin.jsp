@@ -15,6 +15,10 @@
     </head>
     <body>
         <h1>Admin</h1>
+		
+		hello ${loggedInAdmin}, <a href="login?action=logout">Logout</a>
+
+		<h1>User List</h1>
 
         <table>
             <tr>
@@ -55,15 +59,30 @@
             </c:forEach>
         </table>
 
+        <c:if test="${selectedUser != null}">
+            <h3>Edit User</h3>
+            <form action="admin" method="POST">
+                Username: <input type="text" name="username" value="${selectedUser.username}"><br>
+                Password: <input type="password" name="password" value="${selectedUser.password}"><br>
+                Email:	  <input type="text" name="email" value="${selectedUser.email}"><br>
+                Active:	  <input type="number" name="active" min="0" max="1" value="${selectedUserActive}"><br>
+                First name:<input type="text" name="firstname" value="${selectedUser.firstname}"><br>
+                Last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
+                Role: 	  <input type="number" name="role" min="1" max="2" value="${selectedUserRole}"><br>
+                <input type="hidden" name="action" value="edit">
+                <input type="submit" value="Save">
+            </form>
+        </c:if>
+
         <h1>Add Users</h1>
         <form action="admin" method="POST">
             Username: <input type="text" name="username" value=""><br>
             Password: <input type="password" name="password" value=""><br>
             Email:	  <input type="text" name="email" value=""><br>
             Active:	  <input type="number" name="active" min="0" max="1" value=""><br>
-            Firstname:<input type="text" name="firstname" value=""><br>
-            LastName: <input type="text" name="lastname" value=""><br>
-            Role: 	  <input type="number" name="role" min="0" max="1" value=""><br>
+            First name:<input type="text" name="firstname" value=""><br>
+            Last name: <input type="text" name="lastname" value=""><br>
+            Role: 	  <input type="number" name="role" min="1" max="2" value=""><br>
             <input type="hidden" name="action" value="add">
             <input type="submit" value="Add User">
         </form>

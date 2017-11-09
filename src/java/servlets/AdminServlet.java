@@ -6,6 +6,7 @@
 package servlets;
 
 import businesslogic.UserService;
+import domainmodel.Role;
 import domainmodel.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,6 +37,38 @@ public class AdminServlet extends HttpServlet
     {
 
         UserService us = new UserService();
+
+        String action = request.getParameter("action");
+        if (action != null && action.equals("view"))
+        {
+            String selectedUsername = request.getParameter("selectedUser");
+            try
+            {
+                User user = us.get(selectedUsername);
+
+                boolean isActive = user.getActive();
+                String active;
+
+                if (isActive)
+                {
+                    active = "1";
+                } else
+                {
+                    active = "0";
+                }
+
+                Role role = user.getRole();
+                Integer roleID = role.getRoleID();
+                String roleString = roleID.toString();
+
+                request.setAttribute("selectedUserRole", roleString);
+                request.setAttribute("selectedUserActive", active);
+                request.setAttribute("selectedUser", user);
+            } catch (Exception ex)
+            {
+                Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         List<User> users = null;
 
@@ -104,7 +138,22 @@ public class AdminServlet extends HttpServlet
             String selectedUsername = request.getParameter("selectedUser");
 
             us.delete(selectedUsername);
+        } else if (action.equals("edit"))
+        {
+            roleInt = Integer.parseInt(role);
+            activeInt = Integer.parseInt(active);
 
+            if (activeInt == 1)
+            {
+                activeBoolean = true;
+            } else if (activeInt == 0)
+            {
+                activeBoolean = false;
+            }
+            
+            Role rolez = new Role(roleInt);
+            User user = new User(username, password, email, activeBoolean, firstname, lastname, rolez);
+            us.update(user);
         }
 
         List<User> users = null;

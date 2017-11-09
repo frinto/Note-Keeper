@@ -66,6 +66,7 @@ public class AccountServlet extends HttpServlet
                         HttpSession session = request.getSession();
                         
                         session.setAttribute("adminSession", u.getUsername());
+                        session.setAttribute("loggedInAdmin", u.getUsername());
                         
                         response.sendRedirect("admin");
                         
