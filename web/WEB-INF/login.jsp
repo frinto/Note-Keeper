@@ -20,6 +20,7 @@
             Password:<input type="password" name="password" value=""/><br>
             <input type="submit" value="Login"/>
         </form>
+        <a href="registration?action=registration">register</a>
         ${errorMsg}
         
     </body>

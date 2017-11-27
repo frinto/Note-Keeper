@@ -28,6 +28,7 @@
             <a href="admin?action=logout">Logout</a>
             <a href="admin">Admin Page</a>
             <a href="notes?action=${loggedInAdmin}">Notes Page</a>
+            <a href="manageCompany">Manage Company</a>
         </c:if>
 
         <h1>Notes</h1>
