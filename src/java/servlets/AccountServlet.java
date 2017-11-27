@@ -7,6 +7,7 @@ package servlets;
 
 import businesslogic.UserService;
 import dataaccess.DBUtil;
+import domainmodel.Company;
 import domainmodel.Role;
 import domainmodel.User;
 import java.io.IOException;
@@ -43,6 +44,9 @@ public class AccountServlet extends HttpServlet
 
         if (user != null && action != null && action.equals("account"))
         {
+            User updatedUser = (User) session.getAttribute("userView");
+            session.setAttribute("userView", updatedUser);
+            
             getServletContext().getRequestDispatcher("/WEB-INF/account/view.jsp").forward(request, response);
             return;
         }
@@ -68,9 +72,15 @@ public class AccountServlet extends HttpServlet
                     }
 
                     Role role = selectedUser.getRole();
+                    Company company = selectedUser.getCompany();
+                    
                     Integer roleID = role.getRoleID();
                     String roleString = roleID.toString();
-
+                    
+                    Integer companyID = company.getCompanyID();
+                    String companyString = companyID.toString();
+                    
+                    session.setAttribute("selectedUserCompany", companyString);
                     session.setAttribute("selectedUserRole", roleString);
                     session.setAttribute("selectedUserActive", active);
                     session.setAttribute("selectedUser", selectedUser);
@@ -126,8 +136,8 @@ public class AccountServlet extends HttpServlet
                         if (u.getRole().getRoleID() == 1)
                         {
                             HttpSession session = request.getSession();
-
-                            User admin = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname());
+                            
+                            User admin = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname(), u.getRole(), u.getCompany());
 
                             session.setAttribute("adminSession", admin);
                             session.setAttribute("loggedInAdmin", u.getUsername());
@@ -139,7 +149,7 @@ public class AccountServlet extends HttpServlet
                         {
                             HttpSession session = request.getSession();
 
-                            User user = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname());
+                            User user = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname(), u.getRole(), u.getCompany());
 
                             session.setAttribute("userView", user);
                             session.setAttribute("userSession", user);
@@ -174,9 +184,12 @@ public class AccountServlet extends HttpServlet
             String firstname = request.getParameter("firstname");
             String lastname = request.getParameter("lastname");
             String role = request.getParameter("role");
+            String company = request.getParameter("company");
+            int companyInt;
             int roleInt;
             int activeInt;
 
+            companyInt = Integer.parseInt(company);
             roleInt = Integer.parseInt(role);
             activeInt = Integer.parseInt(active);
 
@@ -189,7 +202,8 @@ public class AccountServlet extends HttpServlet
             }
 
             Role rolez = new Role(roleInt);
-            User user = new User(username, password, email, activeBoolean, firstname, lastname, rolez);
+            Company companyz = new Company(companyInt);
+            User user = new User(username, password, email, activeBoolean, firstname, lastname, rolez, companyz);
             us.update(user);
 
             HttpSession session = request.getSession();
@@ -197,7 +211,7 @@ public class AccountServlet extends HttpServlet
             session.setAttribute("userView", user);
             session.setAttribute("selectedUser", user);
             session.setAttribute("selectedUserActive", active);
-
+          
             request.setAttribute("editSuccess", "Account Updated and Updated DB");
             getServletContext().getRequestDispatcher("/WEB-INF/account/edit.jsp").forward(request, response);
             return;

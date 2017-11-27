@@ -31,6 +31,7 @@
                 <th>Active</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Company Name</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -44,6 +45,7 @@
                     <td><c:out value="${item.active}"/></td>
                     <td><c:out value="${item.firstname}"/></td>
                     <td><c:out value="${item.lastname}"/></td>
+                    <td><c:out value="${item.company.companyName}"/></td>
                     <td>
                         <form action="admin" method="post" >
                             <input type="submit" value="Delete">
@@ -74,6 +76,7 @@
                 First name:<input type="text" name="firstname" value="${selectedUser.firstname}"><br>
                 Last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
                 Role: 	  <input type="number" name="role" min="1" max="2" value="${selectedUserRole}"><br>
+                Company:  <input type="number" name="company" min="1" max="3" value="${selectedUserCompany}"><br>
                 <input type="hidden" name="action" value="edit">
                 <input type="submit" value="Save">
             </form>
@@ -88,6 +91,7 @@
             First name:<input type="text" name="firstname" value=""><br>
             Last name: <input type="text" name="lastname" value=""><br>
             Role: 	  <input type="number" name="role" min="1" max="2" value=""><br>
+            Company: 	  <input type="number" name="company" min="1" max="3" value=""><br>
             <input type="hidden" name="action" value="add">
             <input type="submit" value="Add User">
         </form><br>

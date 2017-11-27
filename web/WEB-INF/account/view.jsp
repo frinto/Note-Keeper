@@ -33,6 +33,7 @@
                 <th>Active</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Company Name</th>
                 <th></th>
             </tr>
             <tr>
@@ -42,6 +43,7 @@
                 <td><c:out value="${userView.active}"/></td>
                 <td><c:out value="${userView.firstname}"/></td>
                 <td><c:out value="${userView.lastname}"/></td>
+                <td><c:out value="${userView.company.companyName}"/></td>
                 <td>
                     <form action="view" method="get">
                         <input type="submit" value="Edit">

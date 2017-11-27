@@ -6,6 +6,7 @@
 package servlets;
 
 import businesslogic.UserService;
+import domainmodel.Company;
 import domainmodel.Role;
 import domainmodel.User;
 import java.io.IOException;
@@ -60,10 +61,16 @@ public class AdminServlet extends HttpServlet
                     active = "0";
                 }
 
+                Company company = user.getCompany();
                 Role role = user.getRole();
+                
                 Integer roleID = role.getRoleID();
                 String roleString = roleID.toString();
+                
+                Integer companyID = company.getCompanyID();
+                String companyString = companyID.toString();
 
+                request.setAttribute("selectedUserCompany", companyString);
                 request.setAttribute("selectedUserRole", roleString);
                 request.setAttribute("selectedUserActive", active);
                 request.setAttribute("selectedUser", user);
@@ -120,6 +127,8 @@ public class AdminServlet extends HttpServlet
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String role = request.getParameter("role");
+        String company = request.getParameter("company");
+        int companyInt;
         int roleInt;
         int activeInt;
 
@@ -129,12 +138,13 @@ public class AdminServlet extends HttpServlet
 
         if (action.equals("add"))
         {
-            if (username.equals("") || password.equals("") || email.equals("") || firstname.equals("") || lastname.equals("") || active.equals("") || active.equals("") || role.equals(""))
+            if (username.equals("") || password.equals("") || email.equals("") || firstname.equals("") || lastname.equals("") || active.equals("") || active.equals("") || role.equals("") || company.equals(""))
             {
                 request.setAttribute("errorMessage", "please fill in all fields");
 
             } else
             {
+                companyInt = Integer.parseInt(company);
                 roleInt = Integer.parseInt(role);
                 activeInt = Integer.parseInt(active);
 
@@ -148,7 +158,7 @@ public class AdminServlet extends HttpServlet
 
                 try
                 {
-                    us.insert(username, password, email, activeBoolean, firstname, lastname, roleInt);
+                    us.insert(username, password, email, activeBoolean, firstname, lastname, roleInt, companyInt);
                 } catch (Exception ex)
                 {
                     Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,6 +190,7 @@ public class AdminServlet extends HttpServlet
             
         } else if (action.equals("edit"))
         {
+            companyInt = Integer.parseInt(company);
             roleInt = Integer.parseInt(role);
             activeInt = Integer.parseInt(active);
 
@@ -192,7 +203,8 @@ public class AdminServlet extends HttpServlet
             }
             
             Role rolez = new Role(roleInt);
-            User user = new User(username, password, email, activeBoolean, firstname, lastname, rolez);
+            Company companeyz = new Company(companyInt);
+            User user = new User(username, password, email, activeBoolean, firstname, lastname, rolez, companeyz);
             us.update(user);
         }
 

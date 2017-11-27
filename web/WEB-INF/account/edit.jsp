@@ -31,6 +31,7 @@
                 First name:<input type="text" name="firstname" value="${selectedUser.firstname}"><br>
                 Last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
                 Role: 	  <input type="number" name="role" min="2" max="2" value="${selectedUserRole}"readonly><br>
+                Company: <input type="number" name="company" min="1" max="3" value="${selectedUserCompany}"readonly><br>
                 <input type="hidden" name="action" value="editAccount">
                 <input type="submit" value="Save">
             </form>

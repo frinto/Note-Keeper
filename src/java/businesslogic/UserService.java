@@ -8,6 +8,7 @@ package businesslogic;
 import dataaccess.DBException;
 import dataaccess.NoteDB;
 import dataaccess.UserDB;
+import domainmodel.Company;
 import domainmodel.Role;
 import domainmodel.User;
 import java.util.List;
@@ -29,11 +30,12 @@ public class UserService
         return UserDB.getAll();
     }
 
-    public int insert(String username, String password, String email, boolean activeBoolean, String firstname, String lastname, int roleID) throws Exception
+    public int insert(String username, String password, String email, boolean activeBoolean, String firstname, String lastname, int roleID, int companyID) throws Exception
     {
         Role role = new Role(roleID);
+        Company company =  new Company(companyID);
         
-        User user = new User(username, password, email, activeBoolean, firstname, lastname, role);
+        User user = new User(username, password, email, activeBoolean, firstname, lastname, role, company);
         return UserDB.insert(user);
     }
 

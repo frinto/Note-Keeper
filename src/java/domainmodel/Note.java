@@ -60,7 +60,7 @@ public class Note implements Serializable
     @ManyToOne(optional = false)
     private User owner;
 
-    public Note()
+        public Note()
     {
     }
     
@@ -101,6 +101,7 @@ public class Note implements Serializable
         this.title = title;
         this.contents = contents;
     }
+
 
     public Integer getNoteID()
     {
