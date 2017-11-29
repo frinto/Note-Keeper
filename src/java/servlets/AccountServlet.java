@@ -158,6 +158,18 @@ public class AccountServlet extends HttpServlet
                             response.sendRedirect("notes");
 
                             return;
+                        }else if (u.getRole().getRoleID() == 3)
+                        {
+                            HttpSession session = request.getSession();
+                            
+                            User admin = new User(u.getUsername(), u.getPassword(), u.getEmail(), u.getActive(), u.getFirstname(), u.getLastname(), u.getRole(), u.getCompany());
+
+                            session.setAttribute("adminSession", admin);
+                            session.setAttribute("loggedInAdmin", u.getUsername());
+
+                            response.sendRedirect("companyAdmin");
+
+                            return;
                         }
 
                     } else if (u.getActive() == false)

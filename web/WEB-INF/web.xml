@@ -21,6 +21,14 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>CompanyAdminServlet</servlet-name>
+        <servlet-class>servlets.CompanyAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompanyAdminServlet</servlet-name>
+        <url-pattern>/companyAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ManageCompanyServlet</servlet-name>
         <servlet-class>servlets.ManageCompanyServlet</servlet-class>
     </servlet>
