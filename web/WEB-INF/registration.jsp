@@ -22,6 +22,9 @@
             Last Name: <input type="text" name="lastName" placeholder="last name" value="" required="required"><br>
             Company ID: <input type="number" name="company" placeholder="company" min="1" max="3" value="" required="required"><br>
             <input type="submit" name="register" value="register">
-        </form>
+        </form><br>
+        
+        ${errorMessage}
+        
     </body>
 </html>
