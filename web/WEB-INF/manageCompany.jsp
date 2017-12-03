@@ -10,67 +10,161 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="<c:url value='styles/style.css'/>" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <title>Manage Company</title>
+        <style>
+            .navbar-brand { position: relative; z-index: 2; }
+
+            .navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; transition: transform 0.3s; }
+
+            .navbar .navbar-collapse { position: relative; overflow: hidden !important; }
+            .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
+
+            .navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
+            .navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
+            .navbar.navbar-inverse .nav-collapse { background-color: #222; }
+            .navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
+            .nav-collapse>li { float: right; }
+
+            .btn.btn-circle { border-radius: 50px; }
+            .btn.btn-outline { background-color: transparent; }
+
+            .navbar-nav.navbar-right .btn:not(.collapsed) {
+                background-color: rgb(111, 84, 153);
+                border-color: rgb(111, 84, 153);
+                color: rgb(255, 255, 255);
+            }
+
+            .navbar.navbar-default .nav-collapse,
+            .navbar.navbar-inverse .nav-collapse {
+                height: auto !important;
+                transition: transform 0.3s;
+                transform: translate(0px,-50px);
+            }
+            .navbar.navbar-default .nav-collapse.in,
+            .navbar.navbar-inverse .nav-collapse.in {
+                transform: translate(0px,0px);
+            }
+
+
+            @media screen and (max-width: 767px) {
+                .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; } 
+
+                .navbar .nav-collapse { margin: 7.5px auto; padding: 0; }
+                .navbar .nav-collapse .navbar-form { margin: 0; }
+                .nav-collapse>li { float: none; }
+
+                .navbar.navbar-default .nav-collapse,
+                .navbar.navbar-inverse .nav-collapse {
+                    transform: translate(-100%,0px);
+                }
+                .navbar.navbar-default .nav-collapse.in,
+                .navbar.navbar-inverse .nav-collapse.in {
+                    transform: translate(0px,0px);
+                }
+
+                .navbar.navbar-default .nav-collapse.slide-down,
+                .navbar.navbar-inverse .nav-collapse.slide-down {
+                    transform: translate(0px,-100%);
+                }
+                .navbar.navbar-default .nav-collapse.in.slide-down,
+                .navbar.navbar-inverse .nav-collapse.in.slide-down {
+                    transform: translate(0px,0px);
+                }
+            }
+        </style>
     </head>
     <body>
-        <h1>Manage Companies</h1>
+        <div class="container-fluid">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="admin">System Admin</a>
+                    </div>
 
-        <a href="admin?action=logout">Logout</a>
-        <a href="admin">Admin Page</a>
-        <a href="notes?action=${loggedInAdmin}">Notes Page</a>
-        <a href="manageCompany">Manage Company</a><br>
-        hello ${loggedInAdmin}<br> 
-        <table>
-            <tr>
-                <th>Company ID</th>
-                <th>Company Name</th>
-                <th></th>
-                <th></th>
-            </tr>
+                    <div class="collapse navbar-collapse" id="navbar-collapse-2">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="admin">Admin Page</a></li>
+                            <li><a href="notes?action=${loggedInAdmin}">Notes Page</a></li>
+                            <li><a href="manageCompany">Company Page</a></li>
+                            <li>
+                                <a href="admin?action=logout" class="btn btn-default btn-outline btn-circle collapsed">Logout</a>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container -->
+            </nav><!-- /.navbar -->
+        </div>
 
-            <c:forEach var="item" items="${companys}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Manage Company</h4>
+                    <div class="table-responsive">
+                        <table id="mytable" class="table table-bordred table-striped">
+                            <thead>
+                            <th>Company ID</th>
+                            <th>Company Name</th>
+                            <th></th>
+                            <th></th>
+                            </thead>
+                            <c:forEach var="item" items="${companys}">
+                                <tbody>
 
-                <tr>
-                    <td><c:out value="${item.companyID}"/></td>
-                    <td><c:out value="${item.companyName}"/></td>
+                                    <tr>
+                                        <td><c:out value="${item.companyID}"/></td>
+                                        <td><c:out value="${item.companyName}"/></td>
 
-                    <td>
-                        <form action="manageCompany" method="post" >
-                            <input type="submit" value="Delete">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="selectedCompany" value="${item.companyID}">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="manageCompany" method="get">
-                            <input type="submit" value="Edit">
-                            <input type="hidden" name="action" value="view">
-                            <input type="hidden" name="selectedCompanyID" value="${item.companyID}">
-                        </form>
-                    </td>
+                                        <td>
+                                            <form action="manageCompany" method="post" >
+                                                <input type="submit" value="Delete"><span class="glyphicon glyphicon-trash"></span>
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="selectedCompany" value="${item.companyID}">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="manageCompany" method="get">
+                                                <input type="submit" value="Edit"><span class="glyphicon glyphicon-pencil"></span>
+                                                <input type="hidden" name="action" value="view">
+                                                <input type="hidden" name="selectedCompanyID" value="${item.companyID}">
+                                            </form>
+                                        </td>
 
-                </tr>
-            </c:forEach>
-        </table>
+                                    </tr>
+                                </tbody>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <c:if test="${selectedCompany != null}">
+                <h4>Edit Company</h4>
+                <form action="manageCompany" method="POST">
+                    Company ID: <input type="text" name="companyID" value="${selectedCompany.companyID}" readonly><br>
+                    Company Name: <input type="text" name="companyName" value="${selectedCompany.companyName}"><br>
+                    <input type="hidden" name="action" value="edit">
+                    <input type="submit" value="Save">
+                </form>
+            </c:if>
 
-        <c:if test="${selectedCompany != null}">
-            <h3>Edit Company</h3>
+            <h4>Add Company</h4>
             <form action="manageCompany" method="POST">
-                Company ID: <input type="text" name="companyID" value="${selectedCompany.companyID}" readonly><br>
-                Company Name: <input type="text" name="companyName" value="${selectedCompany.companyName}"><br>
-                <input type="hidden" name="action" value="edit">
-                <input type="submit" value="Save">
-            </form>
-        </c:if>
+                Company Name: <input type="text" name="companyName"><br>
+                <input type="hidden" name="action" value="add">
+                <input type="submit" value="Add Company">
+            </form><br>
 
-        <h1>Add Company</h1>
-        <form action="manageCompany" method="POST">
-            Company Name: <input type="text" name="companyName"><br>
-            <input type="hidden" name="action" value="add">
-            <input type="submit" value="Add Company">
-        </form><br>
-        
-        ${errorMessage}
-
+            ${errorMessage}
+        </div>
     </body>
 </html>
