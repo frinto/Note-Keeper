@@ -155,36 +155,168 @@
             </div>
             ${errorDelete}
 
-            <c:if test="${selectedUser != null}">
-                <h4>Edit User</h4>
-                <form action="companyAdmin" method="POST">
-                    Username: <input type="text" name="username" value="${selectedUser.username}" readonly><br>
-                    Password: <input type="password" name="password" value="${selectedUser.password}"><br>
-                    Email:	  <input type="text" name="email" value="${selectedUser.email}"><br>
-                    Active:	  <input type="number" name="active" min="0" max="1" value="${selectedUserActive}"><br>
-                    First name:<input type="text" name="firstname" value="${selectedUser.firstname}"><br>
-                    Last name: <input type="text" name="lastname" value="${selectedUser.lastname}"><br>
-                    Role: 	  <input type="number" name="role" min="1" max="2" value="${selectedUserRole}"><br>
-                    Company:  <input type="number" name="company" min="1" max="3" value="${selectedUserCompany}"><br>
-                    <input type="hidden" name="action" value="edit">
-                    <input type="submit" value="Save">
-                </form>
-            </c:if>
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="companyAdmin" method="post" class="form-horizontal" role="form">
+                        <fieldset>
 
-            <h4>Add Users</h4>
-            <form action="companyAdmin" method="POST">
-                Username: <input type="text" name="username" value=""><br>
-                Password: <input type="password" name="password" value=""><br>
-                Email:	  <input type="text" name="email" value=""><br>
-                Active:	  <input type="number" name="active" min="0" max="1" value=""><br>
-                First name:<input type="text" name="firstname" value=""><br>
-                Last name: <input type="text" name="lastname" value=""><br>
-                Role: 	  <input type="number" name="role" min="1" max="2" value=""><br>
-                Company: 	  <input type="number" name="company" min="1" max="3" value=""><br>
-                <input type="hidden" name="action" value="add">
-                <input type="submit" value="Add User">
-            </form><br>
-            ${errorMessage}
+                            <!-- Form Name -->
+                            <legend>Add User</legend>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Username</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="username" value="" placeholder="Username" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="password" value="" placeholder="Password" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="email" value="" placeholder="Email" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">First Name</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="firstname" value="" placeholder="first name" class=form-control required="required">
+                                </div>
+
+                                <label class="col-sm-2 control-label" for="textinput">Last Name</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="lastname" value="" placeholder="last name" class=form-control required="required">
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Active</label>
+                                <div class="col-sm-4">
+                                    <input type="number" name="active" min="0" max="1" value="" placeholder="active" class=form-control required="required">
+                                </div>
+
+                                <label class="col-sm-2 control-label" for="textinput">Role</label>
+                                <div class="col-sm-4">
+                                    <input type="number" name="role" min="1" max="2" value="" placeholder="role" class=form-control required="required">
+                                </div>
+                            </div>
+
+
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Company</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="company" min="1" max="3" value="" placeholder="company" class=form-control required="required">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="pull-right">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="submit" value="Add User"  class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div><!-- /.col-lg-12 -->
+                <c:if test="${selectedUser != null}">
+                    <div class="col-md-4">
+                        <form action="companyAdmin" method="post" class="form-horizontal" role="form">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend>Edit User</legend>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Username</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="username" value="${selectedUser.username}" readonly class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" name="password" value="${selectedUser.password}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="email" value="${selectedUser.email}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">First Name</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="firstname" value="${selectedUser.firstname}" class=form-control>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label" for="textinput">Last Name</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="lastname" value="${selectedUser.lastname}" class=form-control>
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Active</label>
+                                    <div class="col-sm-4">
+                                        <input type="number" name="active" min="0" max="1" value="${selectedUserActive}" class=form-control>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label" for="textinput">Role</label>
+                                    <div class="col-sm-4">
+                                        <input type="number" name="role" min="1" max="2" value="${selectedUserRole}" class=form-control>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Company</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" name="company" min="1" max="3" value="${selectedUserCompany}" class=form-control>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="pull-right">
+                                            <input type="hidden" name="action" value="edit">
+                                            <input type="submit" value="Save" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div><!-- /.col-lg-12 -->
+                </c:if>
+            </div><!-- /.row -->
         </div><br>
     </body>
 </html>
