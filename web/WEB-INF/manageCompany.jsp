@@ -147,24 +147,74 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${selectedCompany != null}">
-                <h4>Edit Company</h4>
-                <form action="manageCompany" method="POST">
-                    Company ID: <input type="text" name="companyID" value="${selectedCompany.companyID}" readonly><br>
-                    Company Name: <input type="text" name="companyName" value="${selectedCompany.companyName}"><br>
-                    <input type="hidden" name="action" value="edit">
-                    <input type="submit" value="Save">
-                </form>
-            </c:if>
 
-            <h4>Add Company</h4>
-            <form action="manageCompany" method="POST">
-                Company Name: <input type="text" name="companyName"><br>
-                <input type="hidden" name="action" value="add">
-                <input type="submit" value="Add Company">
-            </form><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="manageCompany" method="post" class="form-horizontal" role="form">
+                        <fieldset>
 
-            ${errorMessage}
+                            <!-- Form Name -->
+                            <legend>Add Company</legend>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Company Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="companyName" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="pull-right">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="submit" value="Add Company" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    ${errorMessage}
+                </div><!-- /.col-lg-12 -->
+                <c:if test="${selectedCompany != null}">
+                    <div class="col-md-4">
+                        <form action="manageCompany" method="post" class="form-horizontal" role="form">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend>Edit Company</legend>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Company ID</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="companyID" value="${selectedCompany.companyID}" readonly class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Company Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="companyName" value="${selectedCompany.companyName}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="pull-right">
+                                            <input type="hidden" name="action" value="edit">
+                                            <input type="submit" value="Save" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div><!-- /.col-lg-12 -->
+                </c:if>
+            </div>
         </div>
     </body>
 </html>
