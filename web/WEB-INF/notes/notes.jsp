@@ -178,24 +178,88 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${selectedNote != null}">
-                <h4>Edit Note</h4>
-                <form action="notes" method="POST">
-                    Note ID: <input type="text" name="noteID" value="${selectedNote.noteID}" readonly><br>
-                    Title: <input type="text" name="title" value="${selectedNote.title}"><br>
-                    Contents: <input type="text" name="contents" value="${selectedNote.contents}"><br>
-                    <input type="hidden" name="action" value="edit">
-                    <input type="submit" value="Save">
-                </form>
-            </c:if>
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="notes" method="post" class="form-horizontal" role="form">
+                        <fieldset>
 
-            <h4>Add Notes</h4>
-            <form action="notes" method="POST">
-                Title: <input type="text" name="title"><br>
-                Contents: <input type="text" name="contents"><br>
-                <input type="hidden" name="action" value="add">
-                <input type="submit" value="Add Note">
-            </form>
+                            <!-- Form Name -->
+                            <legend>Add Notes</legend>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Contents</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="contents" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="pull-right">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="submit" value="Add Note" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                </div><!-- /.col-lg-12 -->
+                <c:if test="${selectedNote != null}">
+                    <div class="col-md-4">
+                        <form action="notes" method="post" class="form-horizontal" role="form">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend>Edit Notes</legend>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Note ID</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="noteID" value="${selectedNote.noteID}" readonly class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Title</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="title" value="${selectedNote.title}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="textinput">Contents</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="contents" value="${selectedNote.contents}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="pull-right">
+                                            <input type="hidden" name="action" value="edit">
+                                            <input type="submit" value="Save" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div><!-- /.col-lg-12 -->
+                </c:if>
+            </div>
         </div>
     </body>
 </html>
