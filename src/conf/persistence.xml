@@ -7,6 +7,12 @@
     <class>domainmodel.Role</class>
     <class>domainmodel.User</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+<!--    <properties>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/frintode_UsersDB?zeroDateTimeBehavior=convertToNull"/>
+        <property name="javax.persistence.jdbc.user" value="frintode_user"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.password" value="bob12345ABC"/>
+    </properties>-->
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/NotesDB?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

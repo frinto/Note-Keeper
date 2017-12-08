@@ -29,6 +29,14 @@
         <url-pattern>/companyAdmin</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ManageRoleServlet</servlet-name>
+        <servlet-class>servlets.ManageRoleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageRoleServlet</servlet-name>
+        <url-pattern>/manageRole</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ManageCompanyServlet</servlet-name>
         <servlet-class>servlets.ManageCompanyServlet</servlet-class>
     </servlet>

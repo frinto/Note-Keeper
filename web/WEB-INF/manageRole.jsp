@@ -1,6 +1,6 @@
 <%-- 
-    Document   : manageCompany
-    Created on : Nov 27, 2017, 9:31:42 AM
+    Document   : manageRole
+    Created on : Dec 6, 2017, 12:33:44 PM
     Author     : Administrator
 --%>
 
@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <title>Manage Company</title>
+        <title>Manage Role Page</title>
         <style>
             .navbar-brand { position: relative; z-index: 2; }
 
@@ -107,41 +107,44 @@
             </nav><!-- /.navbar -->
         </div>
 
+
+        <!--/.------------------------------------------------------->
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Manage Company</h4>
+                    <h4>Manage Role</h4>
                     <div class="table-responsive">
                         <table id="mytable" class="table table-bordred table-striped">
                             <thead>
-                            <th>Company ID</th>
-                            <th>Company Name</th>
+                            <th>Role ID</th>
+                            <th>Role Name</th>
                             <th></th>
                             <th></th>
                             </thead>
-                            <c:forEach var="item" items="${companys}">
+                            <c:forEach var="item" items="${roles}">
                                 <tbody>
 
                                     <tr>
-                                        <td><c:out value="${item.companyID}"/></td>
-                                        <td><c:out value="${item.companyName}"/></td>
+                                        <td><c:out value="${item.roleID}"/></td>
+                                <td><c:out value="${item.roleName}"/></td>
 
-                                        <td>
-                                            <form action="manageCompany" method="post" >
-                                                <input type="submit" value="Delete"><span class="glyphicon glyphicon-trash"></span>
-                                                <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="selectedCompany" value="${item.companyID}">
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form action="manageCompany" method="get">
-                                                <input type="submit" value="Edit"><span class="glyphicon glyphicon-pencil"></span>
-                                                <input type="hidden" name="action" value="view">
-                                                <input type="hidden" name="selectedCompanyID" value="${item.companyID}">
-                                            </form>
-                                        </td>
+                                <td>
+                                    <form action="manageRole" method="post" >
+                                        <input type="submit" value="Delete"><span class="glyphicon glyphicon-trash"></span>
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="selectedRole" value="${item.roleID}">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="manageRole" method="get">
+                                        <input type="submit" value="Edit"><span class="glyphicon glyphicon-pencil"></span>
+                                        <input type="hidden" name="action" value="view">
+                                        <input type="hidden" name="selectedRoleID" value="${item.roleID}">
+                                    </form>
+                                </td>
 
-                                    </tr>
+                                </tr>
                                 </tbody>
                             </c:forEach>
                         </table>
@@ -151,17 +154,25 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <form action="manageCompany" method="post" class="form-horizontal" role="form">
+                    <form action="manageRole" method="post" class="form-horizontal" role="form">
                         <fieldset>
 
                             <!-- Form Name -->
-                            <legend>Add Company</legend>
+                            <legend>Add Role</legend>
+                            
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="textinput">Role ID</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="roleID" class="form-control">
+                                </div>
+                            </div>
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="textinput">Company Name</label>
+                                <label class="col-sm-2 control-label" for="textinput">Role Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="companyName" class="form-control">
+                                    <input type="text" name="roleName" class="form-control">
                                 </div>
                             </div>
 
@@ -169,7 +180,7 @@
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <div class="pull-right">
                                         <input type="hidden" name="action" value="add">
-                                        <input type="submit" value="Add Company" class="btn btn-primary">
+                                        <input type="submit" value="Add Role" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
@@ -178,27 +189,27 @@
                     </form>
                     ${errorMessage}
                 </div><!-- /.col-lg-12 -->
-                <c:if test="${selectedCompany != null}">
+                <c:if test="${selectedRole != null}">
                     <div class="col-md-4">
-                        <form action="manageCompany" method="post" class="form-horizontal" role="form">
+                        <form action="manageRole" method="post" class="form-horizontal" role="form">
                             <fieldset>
 
                                 <!-- Form Name -->
-                                <legend>Edit Company</legend>
+                                <legend>Edit Role</legend>
 
                                 <!-- Text input-->
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="textinput">Company ID</label>
+                                    <label class="col-sm-2 control-label" for="textinput">Role ID</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="companyID" value="${selectedCompany.companyID}" readonly class="form-control">
+                                        <input type="number" name="roleID" value="${selectedRole.roleID}" readonly class="form-control">
                                     </div>
                                 </div>
 
                                 <!-- Text input-->
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="textinput">Company Name</label>
+                                    <label class="col-sm-2 control-label" for="textinput">Role Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="companyName" value="${selectedCompany.companyName}" class="form-control">
+                                        <input type="text" name="roleName" value="${selectedRole.roleName}" class="form-control">
                                     </div>
                                 </div>
 
@@ -217,5 +228,6 @@
                 </c:if>
             </div>
         </div>
+        <!--/-------------------------------------------------------------------------------->
     </body>
 </html>

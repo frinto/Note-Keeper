@@ -98,6 +98,7 @@
                             <li><a href="admin">Admin Page</a></li>
                             <li><a href="notes?action=${loggedInAdmin}">Notes Page</a></li>
                             <li><a href="manageCompany">Company Page</a></li>
+                            <li><a href="manageRole">Manage Role</a></li>
                             <li>
                                 <a href="admin?action=logout" class="btn btn-default btn-outline btn-circle collapsed">Logout</a>
                             </li>
